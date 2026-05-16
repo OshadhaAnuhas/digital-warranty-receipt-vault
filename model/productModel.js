@@ -1,6 +1,7 @@
 import mongoose from "mongoose";
 
 const productSchema = new mongoose.Schema({
+
   productName: {
     type: String,
     required: true,
@@ -31,11 +32,6 @@ const productSchema = new mongoose.Schema({
     required: true,
   },
 
-  receiptImage: {
-    type: String,
-    default: "",
-  },
-
   isInstallment: {
     type: Boolean,
     default: false,
@@ -59,6 +55,11 @@ const productSchema = new mongoose.Schema({
   nextDueDate: {
     type: Date,
   },
+
+  receiptImage: {
+    type: String,
+  },
+
 });
 
 export default mongoose.model("products", productSchema);

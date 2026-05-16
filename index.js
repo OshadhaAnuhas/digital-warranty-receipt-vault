@@ -7,6 +7,7 @@ import route from "./routes/productRoute.js";
 const app = express();
 
 app.use(bodyParser.json());
+app.use("/uploads", express.static("uploads"));
 app.use("/api/product", route);
 
 dotenv.config();
