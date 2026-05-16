@@ -36,7 +36,31 @@ export const fetchProducts = async (req, res) => {
       });
     }
 
-    res.status(200).json(products);
+    const updatedProducts = products.map((product) => {
+
+      const purchaseDate = new Date(product.purchaseDate);
+
+      const expiryDate = new Date(purchaseDate);
+
+      expiryDate.setMonth(
+        expiryDate.getMonth() + product.warrantyMonths
+      );
+
+      const today = new Date();
+
+      const warrantyStatus =
+        expiryDate >= today ? "Active" : "Expired";
+
+      return {
+        ...product._doc,
+
+        warrantyExpiryDate: expiryDate,
+
+        warrantyStatus: warrantyStatus,
+      };
+    });
+
+    res.status(200).json(updatedProducts);
 
   } catch (error) {
 
