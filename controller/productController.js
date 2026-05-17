@@ -7,10 +7,8 @@ export const createProduct = async (req, res) => {
     console.log(req.body);
    const productData = new Product({
   ...req.body,
-
-  receiptImage: req.file
-    ? req.file.filename
-    : "",
+  receiptImage: req.files?.receiptImage?.[0]?.filename || "",
+  productImage: req.files?.productImage?.[0]?.filename || "",
 });
 
     const savedProduct = await productData.save();
@@ -111,34 +109,26 @@ if (product.isInstallment) {
 // UPDATE PRODUCT
 export const updateProduct = async (req, res) => {
   try {
-
     const id = req.params.id;
 
-    const productExist = await Product.findOne({ _id: id });
-
-    if (!productExist) {
-      return res.status(404).json({
-        message: "Product not found.",
-      });
-    }
-
-    const updatedProduct = await Product.findByIdAndUpdate(
+    const updated = await Product.findByIdAndUpdate(
       id,
       req.body,
       { new: true }
     );
 
-    res.status(200).json({
-      message: "Product updated successfully.",
-      product: updatedProduct,
-    });
+    if (!updated) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    res.status(200).json(updated);
 
   } catch (error) {
-
     res.status(500).json({
-      error: "Internal Server Error.",
+      error: error.message,
     });
-
   }
 };
 
@@ -257,5 +247,41 @@ export const getExpiredProducts = async (req, res) => {
       error: "Internal Server Error.",
     });
 
+  }
+};
+
+export const addInstallment = async (req, res) => {
+  try {
+    const id = req.params.id;
+
+    const { amountPaid, note } = req.body;
+
+    const product = await Product.findById(id);
+
+    if (!product) {
+      return res.status(404).json({
+        message: "Product not found",
+      });
+    }
+
+    product.installmentHistory.push({
+      amountPaid,
+      note,
+    });
+
+    product.completedInstallments =
+      product.installmentHistory.length;
+
+    await product.save();
+
+    res.status(200).json({
+      message: "Installment added successfully",
+      product,
+    });
+
+  } catch (error) {
+    res.status(500).json({
+      error: error.message,
+    });
   }
 };

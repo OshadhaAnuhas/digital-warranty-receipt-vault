@@ -9,13 +9,17 @@ import {
   getProductsByCategory,
   getInstallmentProducts,
   getExpiredProducts,
+  addInstallment,
 } from "../controller/productController.js";
 
 const route = express.Router();
 
 route.post(
   "/create",
-  upload.single("receiptImage"),
+  upload.fields([
+    { name: "receiptImage", maxCount: 1 },
+    { name: "productImage", maxCount: 1 },
+  ]),
   createProduct
 );
 
@@ -39,5 +43,7 @@ route.get(
   "/expired",
   getExpiredProducts
 );
+
+route.post("/installment/:id", addInstallment);
 
 export default route;
