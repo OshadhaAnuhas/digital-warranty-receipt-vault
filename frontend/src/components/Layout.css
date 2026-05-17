@@ -1,0 +1,124 @@
+.layout-root {
+  display: flex;
+  min-height: 100vh;
+  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue",
+    Arial, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+.layout-sidebar {
+  width: 240px;
+  flex-shrink: 0;
+  display: flex;
+  flex-direction: column;
+  padding: 1.25rem 0.875rem;
+  background: #09090b;
+  border-right: 1px solid #27272a;
+  color: #fafafa;
+}
+
+.layout-brand {
+  margin: 0 0 1.75rem;
+  padding: 0 0.625rem;
+  font-size: 0.9375rem;
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  line-height: 1.3;
+  color: #fafafa;
+}
+
+.layout-section-label {
+  margin: 0 0 0.5rem;
+  padding: 0 0.625rem;
+  font-size: 0.6875rem;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: #71717a;
+  line-height: 1;
+}
+
+.layout-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+  margin-bottom: 0.25rem;
+}
+
+.layout-nav-link {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.625rem;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #a1a1aa;
+  text-decoration: none;
+  border-radius: 8px;
+  transition: color 0.12s ease, background 0.12s ease;
+}
+
+.layout-nav-link:hover {
+  color: #fafafa;
+  background: #27272a;
+}
+
+.layout-nav-link--active {
+  color: #fafafa;
+  background: #27272a;
+  box-shadow: inset 2px 0 0 #fafafa;
+}
+
+.layout-divider {
+  margin: 1rem 0;
+  border: none;
+  border-top: 1px solid #27272a;
+}
+
+.layout-filters {
+  display: flex;
+  flex-direction: column;
+  gap: 0.125rem;
+}
+
+.layout-filter-btn {
+  display: flex;
+  align-items: center;
+  width: 100%;
+  padding: 0.45rem 0.625rem;
+  font-family: inherit;
+  font-size: 0.8125rem;
+  font-weight: 500;
+  line-height: 1.25;
+  color: #a1a1aa;
+  text-align: left;
+  background: transparent;
+  border: 1px solid transparent;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: color 0.12s ease, background 0.12s ease, border-color 0.12s ease;
+}
+
+.layout-filter-btn:hover {
+  color: #e4e4e7;
+  background: #18181b;
+  border-color: #27272a;
+}
+
+.layout-filter-btn:active {
+  color: #fafafa;
+  background: #27272a;
+}
+
+.layout-filter-btn:focus-visible {
+  outline: none;
+  border-color: #52525b;
+  box-shadow: 0 0 0 3px rgba(250, 250, 250, 0.08);
+}
+
+.layout-main {
+  flex: 1;
+  min-width: 0;
+  padding: 1.5rem 1.75rem;
+  background: #fafafa;
+}

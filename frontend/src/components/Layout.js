@@ -1,87 +1,79 @@
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
+import "./Layout.css";
 
 function Layout({ children, onFilter }) {
   const navigate = useNavigate();
+  const location = useLocation();
 
   const handleFilter = (type, category = null) => {
     navigate("/products");
     if (onFilter) onFilter(type, category);
   };
 
+  const navLinkClass = (path) => {
+    const isActive =
+      path === "/"
+        ? location.pathname === "/"
+        : location.pathname === path;
+    return `layout-nav-link${isActive ? " layout-nav-link--active" : ""}`;
+  };
+
   return (
-    <div style={{ display: "flex", minHeight: "100vh" }}>
-      <div
-        style={{
-          width: "220px",
-          background: "#1f2937",
-          color: "white",
-          padding: "20px",
-          display: "flex",
-          flexDirection: "column",
-          gap: "8px",
-        }}
-      >
-        <h2 style={{ marginBottom: "20px" }}>Vault System</h2>
+    <div className="layout-root">
+      <aside className="layout-sidebar">
+        <h2 className="layout-brand">Vault System</h2>
 
-        <p style={{ color: "#9ca3af", fontSize: "12px", marginBottom: "4px" }}>
-          NAVIGATION
-        </p>
-        <Link to="/" style={{ color: "white", textDecoration: "none" }}>
-          Dashboard
-        </Link>
-        <Link to="/products" style={{ color: "white", textDecoration: "none" }}>
-          Products
-        </Link>
-        <Link to="/add-product" style={{ color: "white", textDecoration: "none" }}>
-          Add Product
-        </Link>
+        <p className="layout-section-label">Navigation</p>
+        <nav className="layout-nav" aria-label="Main">
+          <Link to="/" className={navLinkClass("/")}>
+            Dashboard
+          </Link>
+          <Link to="/products" className={navLinkClass("/products")}>
+            Products
+          </Link>
+          <Link to="/add-product" className={navLinkClass("/add-product")}>
+            Add Product
+          </Link>
+        </nav>
 
-        <hr style={{ borderColor: "#374151", margin: "16px 0" }} />
+        <hr className="layout-divider" />
 
-        <p style={{ color: "#9ca3af", fontSize: "12px", marginBottom: "4px" }}>
-          FILTERS
-        </p>
-        <button
-          onClick={() => handleFilter("all")}
-          style={filterBtnStyle}
-        >
-          All Products
-        </button>
-        <button
-          onClick={() => handleFilter("expired")}
-          style={filterBtnStyle}
-        >
-          Expired Warranty
-        </button>
-        <button
-          onClick={() => handleFilter("installments")}
-          style={filterBtnStyle}
-        >
-          Installments
-        </button>
-        <button
-          onClick={() => handleFilter("category", "Electronics")}
-          style={filterBtnStyle}
-        >
-          Electronics
-        </button>
-      </div>
+        <p className="layout-section-label">Filters</p>
+        <div className="layout-filters">
+          <button
+            type="button"
+            className="layout-filter-btn"
+            onClick={() => handleFilter("all")}
+          >
+            All Products
+          </button>
+          <button
+            type="button"
+            className="layout-filter-btn"
+            onClick={() => handleFilter("expired")}
+          >
+            Expired Warranty
+          </button>
+          <button
+            type="button"
+            className="layout-filter-btn"
+            onClick={() => handleFilter("installments")}
+          >
+            Installments
+          </button>
+          <button
+            type="button"
+            className="layout-filter-btn"
+            onClick={() => handleFilter("category", "Electronics")}
+          >
+            Electronics
+          </button>
+        </div>
+      </aside>
 
-      <div style={{ flex: 1, padding: "20px", background: "#f3f4f6" }}>
-        {children}
-      </div>
+      <main className="layout-main">{children}</main>
     </div>
   );
 }
-
-const filterBtnStyle = {
-  background: "none",
-  border: "none",
-  color: "white",
-  textAlign: "left",
-  cursor: "pointer",
-  padding: "4px 0",
-  fontSize: "14px",
-};
 
 export default Layout;
